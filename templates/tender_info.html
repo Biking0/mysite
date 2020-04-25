@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>招投标公告信息</title>
+    <h1>招投标公告信息</h1>
+</head>
+<body>
+<ul>{% for i in result %}</ul>
+<li>{{ i.nam}}    {{i.company}}   {{i.view_cont}}   {{i.release_time}}     {{i.url}}</li>
+{% endfor %}
+{{result.name}}
+</body>
+</html>
