@@ -2,10 +2,16 @@ from django.template import Template, Context
 from django.http import HttpResponse, Http404
 from django.template.loader import get_template
 from django.shortcuts import render
-
+from django import forms
 from books.models import tender_info
 
+from django.shortcuts import render
+from mysite.forms import ContactForm
+from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+
 import datetime
+import time
 
 
 def hello(request):
@@ -49,10 +55,11 @@ def mypage(request):
     current_section = 'mypagetest'
     return render(request, 'mypage.html', {'current_section': current_section})
 
+
 # 检索数据
 def book_tender_info(request):
     # result=tender_info.objects.filter(name='招标公告名称测试')
-    result=tender_info.objects.all()
+    result = tender_info.objects.all()
     print(result)
     print(result[0].name)
     # print(list(result))
@@ -60,3 +67,62 @@ def book_tender_info(request):
     return render(request, 'tender_info.html', {'result': result})
 
 
+# 打印访问信息
+def display_meta(request):
+    values = request.META.items()
+    values.sort()
+    html = []
+    for k, v in values:
+        html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
+    return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
+# 搜索书籍
+def search_form(request):
+    return render(request, 'search_form.html')
+
+
+def search(request):
+    error = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        elif len(q) > 20:
+            error = True
+        else:
+            books = tender_info.objects.filter(name__icontains=q)
+            return render(request, 'search_results.html',
+                          {'books': books, 'query': q})
+    return render(request, 'search_form.html',
+                  {'error': error})
+
+    # if 'q' in request.GET and request.GET['q']:
+    #     q = request.GET['q']
+    #     books = tender_info.objects.filter(name__icontains=q)
+    #     return render(request, 'search_results.html',
+    #                   {'books': books, 'query': q})
+    # else:
+    #     return render(request, 'search_form.html',
+    #                   {'error': True})
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            send_mail(
+                cd['subject'],
+                cd['message'],
+                cd.get('email', 'noreply@example.com'),
+                ['siteowner@example.com'],
+            )
+            return HttpResponseRedirect('/contact/thanks/')
+    else:
+        form = ContactForm()
+    return render(request, 'contact_form.html', {'form': form})
+
+
+def title(request):
+    return render(request, 'title.html')

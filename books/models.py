@@ -68,6 +68,6 @@ class tender_info(models.Model):
     release_time = models.CharField(max_length=100)
     url = models.CharField(max_length=300, null=True)
 
-    # def __str__(self):  # 重写直接输出类的方法
-    #     return "<tender_info:{name=%s,company=%s,view_cont=%s,release_time=%s,url=%s}>" \
-    #            % (self.name, self.company, self.view_cont, self.release_time, self.url)
+    def __str__(self):  # 重写直接输出类的方法
+        return "<tender_info:{name=%s,company=%s,view_cont=%s,release_time=%s,url=%s}>" \
+               % (self.name, self.company, self.view_cont, self.release_time, self.url)

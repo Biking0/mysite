@@ -14,7 +14,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from mysite.view import hello,current_datetime,hours_ahead,test_for,mypage,book_tender_info
+from mysite.view import hello, current_datetime, hours_ahead, test_for, mypage, book_tender_info, display_meta, contact
+from mysite import view
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,4 +26,9 @@ urlpatterns = [
     url(r'^for', test_for),
     url(r'^mypage', mypage),
     url(r'^tender/$', book_tender_info),
+    url(r'^display/$', display_meta),
+    url(r'^search-form/$', view.search_form),
+    url(r'^search/$', view.search),
+    url(r'^contact/$', view.contact),
+    url(r'^title/$', view.title),
 ]
