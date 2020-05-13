@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^search/$', view.search),
     url(r'^contact/$', view.contact),
     url(r'^title/$', view.title),
+    url(r'^region/$', view.region_top),
+    url(r'^view/$', view.view_top),
 ]

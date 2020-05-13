@@ -10,6 +10,9 @@ from mysite.forms import ContactForm
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
+# from django.db import connections
+import operator
 
 import datetime
 import time
@@ -81,15 +84,13 @@ def book_tender_info_page(request):
     except PageNotAnInteger as e:  # 传入一个字符串也显示第一页
         page_obj = paginator.page(1)
     return render(request, 'tender_info_page.html',
-                  {'page_obj': page_obj})    #返回page_obj对象
+                  {'page_obj': page_obj})  # 返回page_obj对象
 
-
-
-    print(result)
-    print(result[0].name)
-    # print(list(result))
-    # result=1
-    return render(request, 'tender_info.html', {'result': result})
+    # print(result)
+    # print(result[0].name)
+    # # print(list(result))
+    # # result=1
+    # return render(request, 'tender_info.html', {'result': result})
 
 
 # 打印访问信息
@@ -151,3 +152,73 @@ def contact(request):
 
 def title(request):
     return render(request, 'title.html')
+
+
+# 地区排名
+def region_top(request):
+    # result=tender_info.objects.filter(name='招标公告名称测试')
+    # result = tender_info.objects.raw(sql)
+    # result = tender_info.objects.filter(name__contains="郑州").values('name').annotate(count=Count('name')).values('name','count')
+    zz = tender_info.objects.filter(name__contains="郑州").count()
+    ly = tender_info.objects.filter(name__contains="洛阳").count()
+    ay = tender_info.objects.filter(name__contains="安阳").count()
+
+    # result = tender_info.objects.values_list('msg_status').annotate(Count('id'))
+    # cursor = connection.cursor()
+    # cursor.execute(sql)
+    # result = cursor.fetchall()
+    # print(ret)
+    result = []
+    zz_str = {'region': '郑州', 'count': zz}
+    ay_str = {'region': '安阳', 'count': ay}
+    ly_str = {'region': '洛阳', 'count': ly}
+
+    result.append(zz_str)
+    result.append(ay_str)
+    result.append(ly_str)
+    print(result)
+
+    result_sort = sorted(result, key=operator.itemgetter('count'), reverse=True)
+    print(result_sort)
+    # print(result)
+    # print(result[0].name)
+    # # print(list(result))
+    # # result=1
+    return render(request, 'region_top.html', {'result': result_sort})
+
+
+# 公告浏览量排名
+def view_top(request):
+    # result=tender_info.objects.filter(name='招标公告名称测试')
+    # result = tender_info.objects.raw(sql)
+    # result = tender_info.objects.filter(name__contains="郑州").values('name').annotate(count=Count('name')).values('name','count')
+    view_list = tender_info.objects.order_by("-view_cont")[:10]
+
+    zz = tender_info.objects.filter(name__contains="郑州").count()
+    ly = tender_info.objects.filter(name__contains="洛阳").count()
+    ay = tender_info.objects.filter(name__contains="安阳").count()
+
+    # result = tender_info.objects.values_list('msg_status').annotate(Count('id'))
+    # cursor = connection.cursor()
+    # cursor.execute(sql)
+    # result = cursor.fetchall()
+    # print(ret)
+    result = []
+    zz_str = {'region': '郑州', 'count': zz}
+    ay_str = {'region': '安阳', 'count': ay}
+    ly_str = {'region': '洛阳', 'count': ly}
+
+    result.append(zz_str)
+    result.append(ay_str)
+    result.append(ly_str)
+    print(result)
+
+    result_sort = sorted(result, key=operator.itemgetter('count'), reverse=True)
+    print(result_sort)
+
+    print(view_list)
+    # print(result)
+    # print(result[0].name)
+    # # print(list(result))
+    # # result=1
+    return render(request, 'view_top.html', {'result': view_list})
