@@ -56,7 +56,7 @@ def mypage(request):
     return render(request, 'mypage.html', {'current_section': current_section})
 
 
-# 检索数据
+# 展示数据
 def book_tender_info(request):
     # result=tender_info.objects.filter(name='招标公告名称测试')
     result = tender_info.objects.all()

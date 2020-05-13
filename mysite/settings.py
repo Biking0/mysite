@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #     }
 # }
 
-# mysql
+# mysql数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
