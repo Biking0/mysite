@@ -64,7 +64,7 @@ class Meishi1(models.Model):
 class tender_info(models.Model):
     name = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
-    view_cont = models.CharField(max_length=100)
+    view_cont = models.IntegerField(max_length=100)
     release_time = models.CharField(max_length=100)
     url = models.CharField(max_length=300, null=True)
 

@@ -110,16 +110,27 @@ def search_form(request):
 
 def search(request):
     error = False
-    if 'q' in request.GET:
-        q = request.GET['q']
-        if not q:
+    if 'search_input' in request.GET:
+        search_input = request.GET['search_input']
+        if not search_input:
             error = True
-        elif len(q) > 20:
+        elif len(search_input) > 20:
             error = True
         else:
-            books = tender_info.objects.filter(name__icontains=q)
+            # books = tender_info.objects.filter(name__icontains=q)
+
+            result = tender_info.objects.filter(name__icontains=search_input)
+            current_page = request.GET.get('p')  # 使用get方法来获取翻页的页数
+            paginator = Paginator(result, 10)  # Paginator生成一个对象，然后传入queryset,
+            try:  # 以及每页显示的个数，这里每页显示十个
+                page_obj = paginator.page(current_page)  # 根据get方法取到的数字显示页数
+            except EmptyPage as e:  # 如果get方法获取了一个没有的页数则显示第一页
+                page_obj = paginator.page(1)
+            except PageNotAnInteger as e:  # 传入一个字符串也显示第一页
+                page_obj = paginator.page(1)
             return render(request, 'search_results.html',
-                          {'books': books, 'query': q})
+                          {'page_obj': page_obj, 'query': search_input})  # 返回page_obj对象
+
     return render(request, 'search_form.html',
                   {'error': error})
 
