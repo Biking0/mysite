@@ -9,6 +9,7 @@ from django.shortcuts import render
 from mysite.forms import ContactForm
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import datetime
 import time
@@ -60,6 +61,30 @@ def mypage(request):
 def book_tender_info(request):
     # result=tender_info.objects.filter(name='招标公告名称测试')
     result = tender_info.objects.all()
+    print(result)
+    print(result[0].name)
+    # print(list(result))
+    # result=1
+    return render(request, 'tender_info.html', {'result': result})
+
+
+# 展示数据，翻页
+def book_tender_info_page(request):
+    # result=tender_info.objects.filter(name='招标公告名称测试')
+    result = tender_info.objects.all()
+    current_page = request.GET.get('p')  # 使用get方法来获取翻页的页数
+    paginator = Paginator(result, 10)  # Paginator生成一个对象，然后传入queryset,
+    try:  # 以及每页显示的个数，这里每页显示十个
+        page_obj = paginator.page(current_page)  # 根据get方法取到的数字显示页数
+    except EmptyPage as e:  # 如果get方法获取了一个没有的页数则显示第一页
+        page_obj = paginator.page(1)
+    except PageNotAnInteger as e:  # 传入一个字符串也显示第一页
+        page_obj = paginator.page(1)
+    return render(request, 'tender_info_page.html',
+                  {'page_obj': page_obj})    #返回page_obj对象
+
+
+
     print(result)
     print(result[0].name)
     # print(list(result))
