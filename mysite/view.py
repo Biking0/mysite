@@ -170,26 +170,31 @@ def region_top(request):
     # result=tender_info.objects.filter(name='招标公告名称测试')
     # result = tender_info.objects.raw(sql)
     # result = tender_info.objects.filter(name__contains="郑州").values('name').annotate(count=Count('name')).values('name','count')
-    zz = tender_info.objects.filter(name__contains="郑州").count()
-    ly = tender_info.objects.filter(name__contains="洛阳").count()
-    ay = tender_info.objects.filter(name__contains="安阳").count()
 
-    # result = tender_info.objects.values_list('msg_status').annotate(Count('id'))
-    # cursor = connection.cursor()
-    # cursor.execute(sql)
-    # result = cursor.fetchall()
-    # print(ret)
-    result = []
-    zz_str = {'region': '郑州', 'count': zz}
-    ay_str = {'region': '安阳', 'count': ay}
-    ly_str = {'region': '洛阳', 'count': ly}
+    region_list = [{'region': '郑州', 'count': 0},
+                   {'region': '开封', 'count': 0},
+                   {'region': '洛阳', 'count': 0},
+                   {'region': '平顶山', 'count': 0},
+                   {'region': '安阳', 'count': 0},
+                   {'region': '鹤壁', 'count': 0},
+                   {'region': '新乡', 'count': 0},
+                   {'region': '焦作', 'count': 0},
+                   {'region': '濮阳', 'count': 0},
+                   {'region': '许昌', 'count': 0},
+                   {'region': '漯河', 'count': 0},
+                   {'region': '三门峡', 'count': 0},
+                   {'region': '南阳', 'count': 0},
+                   {'region': '商丘', 'count': 0},
+                   {'region': '信阳', 'count': 0},
+                   {'region': '周口', 'count': 0},
+                   {'region': '驻马店', 'count': 0}]
+    for i in region_list:
+        count = tender_info.objects.filter(name__contains=i['region']).count()
+        i['count'] = count
 
-    result.append(zz_str)
-    result.append(ay_str)
-    result.append(ly_str)
-    print(result)
+    print(region_list)
 
-    result_sort = sorted(result, key=operator.itemgetter('count'), reverse=True)
+    result_sort = sorted(region_list, key=operator.itemgetter('count'), reverse=True)
     print(result_sort)
     # print(result)
     # print(result[0].name)
@@ -233,3 +238,29 @@ def view_top(request):
     # # print(list(result))
     # # result=1
     return render(request, 'view_top.html', {'result': view_list})
+
+
+# 行业排名
+def industry_top(request):
+    # result=tender_info.objects.filter(name='招标公告名称测试')
+    # result = tender_info.objects.raw(sql)
+
+    industry_list = [{'industry': '教育', 'search_str': '大学', 'count': 0},
+                     {'industry': '银行', 'search_str': '银行', 'count': 0},
+                     {'industry': '快递', 'search_str': '快递', 'count': 0},
+                     {'industry': '能源', 'search_str': '煤', 'count': 0},
+                     {'industry': '房地产', 'search_str': '房地产', 'count': 0},
+                     {'industry': '交通', 'search_str': '交通运输', 'count': 0}]
+    for i in industry_list:
+        count = tender_info.objects.filter(name__contains=i['search_str']).count()
+        i['count'] = count
+
+    print(industry_list)
+
+    result_sort = sorted(industry_list, key=operator.itemgetter('count'), reverse=True)
+    print(result_sort)
+    # print(result)
+    # print(result[0].name)
+    # # print(list(result))
+    # # result=1
+    return render(request, 'industry_top.html', {'result': result_sort})

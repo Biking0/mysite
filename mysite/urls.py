@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^title/$', view.title),
     url(r'^region/$', view.region_top),
     url(r'^view/$', view.view_top),
+    url(r'^industry/$', view.industry_top),
 ]

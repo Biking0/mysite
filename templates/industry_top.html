@@ -13,14 +13,12 @@
 <!--    top: 50%;-->
 <!--    transform: translate(-50%,-50%);-->
 }
-
-
 </style>
 <head>
     <meta charset="UTF-8">
     {% include "title.html" %}
     <title>招投标公告信息</title>
-    <h1>公告浏览量排名TOP10</h1>
+    <h1>行业排名TOP6</h1>
 </head>
 
 <body class="body">
@@ -30,19 +28,17 @@
     <!--          #这里是表头-->
     <tr>
         <th>公告名称</th>
-        <th>浏览量</th>
-        <!--        <th>网址</th>-->
-        <!--        <th>邮箱</th>-->
+        <th>发布机构</th>
+<!--        <th>邮箱</th>-->
     </tr>
     </thead>
     <tbody>
     <!--          #循环获取数据-->
     {% for row in result %}
     <tr>
-        <td><a href={{ row.url }}>{{ row.name }}</a></td>
-        <td>{{ row.view_cont }}</td>
-        <!--        <td><a href={{ row.url }}>{{ row.url }}</a></td>-->
-        <!--        <td>{{ row.view_cont }}</td>-->
+        <td>{{ row.industry }}</td>
+        <td>{{ row.count }}</td>
+<!--        <td>{{ row.view_cont }}</td>-->
     </tr>
     {% endfor %}
     </tbody>

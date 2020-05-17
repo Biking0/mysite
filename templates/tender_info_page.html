@@ -36,7 +36,7 @@
     <!--          #循环获取数据-->
     {% for row in page_obj.object_list %}
     <tr>
-        <td>{{ row.name }}</td>
+        <td><a href={{ row.url }}>{{ row.name }}</td>
         <td>{{ row.company }}</td>
         <td>{{ row.view_cont }}</td>
     </tr>
