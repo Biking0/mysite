@@ -12,7 +12,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../')
 sys.path.append('D:/project/github/tender_spider')
 sys.path.append('D:/tender_spider')
 
-from tender_spider.main import main
+# from tender_spider.main import main
+from tender_spider.tender_spider.main import main
 
 if __name__ == "__main__":
     main.main()

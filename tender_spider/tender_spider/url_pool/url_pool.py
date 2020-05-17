@@ -7,8 +7,8 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../')
 from bs4 import BeautifulSoup
-import tender_spider.config as config
-from tender_spider.get_data.test.get_data import get_data
+import tender_spider.tender_spider.config as config
+from tender_spider.tender_spider.get_data.test.get_data import get_data
 import re
 
 
@@ -35,4 +35,4 @@ def city_totalpage():
 
     city_totalpage = int(re.findall("\d+", city_totalpage_str)[0])
     print(city_totalpage)
-    return
+    return city_totalpage

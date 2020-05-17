@@ -60,6 +60,7 @@ class Meishi1(models.Model):
         return "<Meishi1:{id=%s,food_name=%s,food_author=%s,food_money=%s,food_star=%s}>" \
                % (self.id, self.food_name, self.food_author, self.food_money, self.food_star)
 
+
 # 招投标公告信息模型
 class tender_info(models.Model):
     name = models.CharField(max_length=100)
@@ -71,3 +72,14 @@ class tender_info(models.Model):
     def __str__(self):  # 重写直接输出类的方法
         return "<tender_info:{name=%s,company=%s,view_cont=%s,release_time=%s,url=%s}>" \
                % (self.name, self.company, self.view_cont, self.release_time, self.url)
+
+
+# 爬虫状态表
+class spider_status(models.Model):
+    spider_flag = models.IntegerField()
+    progress = models.IntegerField()
+    total_progress = models.IntegerField()
+
+    def __str__(self):  # 重写直接输出类的方法
+        return "<spider_status:{spider_flag=%s,progress=%s,total_progress=%s}>" \
+               % (self.spider_flag, self.progress, self.total_progress)

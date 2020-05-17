@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.template.loader import get_template
 from django.shortcuts import render
 from django import forms
-from books.models import tender_info
+from books.models import tender_info, spider_status
 
 from django.shortcuts import render
 from mysite.forms import ContactForm
@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 # from django.db import connections
+from tender_spider.tender_spider import config
 
 import operator
 
@@ -266,4 +267,55 @@ def industry_top(request):
     # # result=1
     return render(request, 'industry_top.html', {'result': result_sort})
 
-# def control_spider():
+
+def control_spider(request):
+    print(1)
+
+    result = spider_status.objects.all()
+
+    result_status = {'spider_flag': '', 'progress': result[0].progress, 'total_progress': result[0].total_progress}
+
+    if 'start_spider' in request.GET:
+        start_spider = request.GET['start_spider']
+        print(start_spider)
+        print(2)
+        p = spider_status(id=1)
+        p.spider_flag = '0'
+        p.progress = result[0].progress
+        p.total_progress = result[0].total_progress
+        p.save()
+        # config.spider_flag = True
+    if 'stop_spider' in request.GET:
+        stop_spider = request.GET['stop_spider']
+        print(stop_spider)
+        p = spider_status(id=1)
+        p.spider_flag = '1'
+        p.progress = result[0].progress
+        p.total_progress = result[0].total_progress
+        p.save()
+        # config.spider_flag = False
+    if 'set_progress' in request.GET:
+        set_progress = request.GET['set_progress']
+        print(set_progress)
+        p = spider_status(id=1)
+        p.spider_flag = '1'
+        p.progress = set_progress
+        p.total_progress = result[0].total_progress
+        p.save()
+        # config.spider_flag = False
+
+    # 爬虫状态
+    # spider_status = config.spider_flag
+
+
+
+    if result[0].spider_flag == 1:
+        result_status['spider_flag'] = '停止爬取'
+    else:
+        result_status['spider_flag'] = '正在爬取'
+
+    print(result)
+    print(result[0].spider_flag)
+    print(result_status)
+
+    return render(request, 'spider.html', {'result': result_status})

@@ -11,15 +11,16 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../')
 import requests
 import time
 import random
-from fake_useragent import UserAgent
+# from fake_useragent import UserAgent
 
 
 # 通用网络请求方法
 def get_data(url):
     try:
-        ua = UserAgent()
-        headers = {'User-Agent': ua.random}
-        response = requests.request("GET", url, headers=headers)
+        # ua = UserAgent()
+        # headers = {'User-Agent': ua.random}
+        # response = requests.request("GET", url, headers=headers)
+        response = requests.request("GET", url)
 
         return response.content
     except Exception as e:

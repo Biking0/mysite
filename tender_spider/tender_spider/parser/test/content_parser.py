@@ -9,10 +9,10 @@ import simplejson
 from bs4 import BeautifulSoup
 import requests
 
-import tender_spider.config as config
-import tender_spider.conn_db.test.save_data as save_data
-import tender_spider.config
-from tender_spider.get_data.test.get_data import get_data
+import tender_spider.tender_spider.config as config
+import tender_spider.tender_spider.conn_db.test.save_data as save_data
+# import tender_spider.config
+from tender_spider.tender_spider.get_data.test.get_data import get_data
 
 
 def parser(response):
@@ -21,12 +21,12 @@ def parser(response):
 
     # 公告名字
     name = soup('h1')[0].string
-    print(name)
+    # print(name)
 
     # 内容url
     content_url = config.common_url + soup('script')[1].string.split('"')[1]
 
-    print(content_url)
+    # print(content_url)
 
     # 获取详细信息
     result_data = get_data(content_url)
@@ -47,8 +47,8 @@ def parser(response):
         else:
             content_data = str(content_soup('td')[i].string)
 
-    print('公告详细信息')
-    print(content_data)
+    # print('公告详细信息')
+    # print(content_data)
 
     content_data_list=[]
     content_data_list.append(name)

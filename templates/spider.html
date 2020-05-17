@@ -1,0 +1,41 @@
+<html>
+<style>
+.body{
+
+    background-color: #D8D8D8;
+<!--    border-radius: 20px;-->
+<!--    width: 300px;-->
+<!--    height: 350px;-->
+<!--    position: absolute;-->
+
+<!--    left: 50%;-->
+<!--    top: 50%;-->
+<!--    transform: translate(-50%,-50%);-->
+}
+
+
+</style>
+<head>
+    <title>爬虫控制</title>
+    {% include "title.html" %}
+</head>
+<body class="body">
+{% if error %}
+<p style="color: red;">Please submit a search term.</p>
+{% endif %}
+<p style="color: red;">爬虫状态：{{ result.spider_flag }}</p>
+<p style="color: red;">爬取进度：{{ result.progress }}</p>
+<p style="color: red;">总任务数：{{ result.total_progress }}</p>
+<form action="/spider" method="get">
+
+    <input type="submit" name="start_spider" value="start_spider">
+    <input type="submit" name="stop_spider" value="stop_spider"></form>
+</br>
+
+<!--<p style="color: red;">先设置指定进度，停止爬虫后，等待5s，再开始爬取</p>-->
+<!--<input type="text" name="set_progress" >-->
+<!--<input type="submit" name="set" value="指定进度">-->
+
+</form>
+</body>
+</html>

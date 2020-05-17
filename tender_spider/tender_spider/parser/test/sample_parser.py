@@ -44,7 +44,7 @@ def parser(response):
         sample_info_data.append(release_time)
         sample_info_data.append(url)
 
-        print(sample_info_data)
+        # print(sample_info_data)
 
         sample_info_list.append(sample_info_data)
         # break
