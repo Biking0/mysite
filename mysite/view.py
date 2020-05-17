@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 # from django.db import connections
+
 import operator
 
 import datetime
@@ -264,3 +265,5 @@ def industry_top(request):
     # # print(list(result))
     # # result=1
     return render(request, 'industry_top.html', {'result': result_sort})
+
+# def control_spider():
