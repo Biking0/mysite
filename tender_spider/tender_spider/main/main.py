@@ -42,7 +42,7 @@ def main():
             spider_status = save_data.get_spider_status()
             if spider_status[0][1] == 1:
                 print('停止爬取 sleep 10s')
-                time.sleep(10)
+                time.sleep(3)
             else:
                 break
 

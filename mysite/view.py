@@ -267,7 +267,7 @@ def industry_top(request):
     # # result=1
     return render(request, 'industry_top.html', {'result': result_sort})
 
-
+# 爬虫控制
 def control_spider(request):
     print(1)
 

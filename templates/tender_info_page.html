@@ -29,14 +29,14 @@
     <tr>
         <th>公告名称</th>
         <th>发布机构</th>
-        <th>邮箱</th>
+        <th>浏览次数</th>
     </tr>
     </thead>
     <tbody>
     <!--          #循环获取数据-->
     {% for row in page_obj.object_list %}
     <tr>
-        <td><a href={{ row.url }}>{{ row.name }}</td>
+        <td><a href={{ row.url }}>{{ row.name }}</a></td>
         <td>{{ row.company }}</td>
         <td>{{ row.view_cont }}</td>
     </tr>
