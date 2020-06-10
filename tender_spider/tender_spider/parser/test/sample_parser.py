@@ -38,6 +38,8 @@ def parser(response):
         release_time = sample_info('span')[4].string
         url = config.common_url + sample_info('a')[0]['href']
 
+
+
         sample_info_data.append(name)
         sample_info_data.append(company)
         sample_info_data.append(view_cont)
